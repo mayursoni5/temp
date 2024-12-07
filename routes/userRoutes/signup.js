@@ -1,7 +1,7 @@
 const express = require("express");
 const zod = require("zod");
 const jwt = require("jsonwebtoken");
-const { User } = require("../../db/db");
+const { User, Account } = require("../../db/db");
 const JWT_SECRET = require("../../config");
 
 const router = express.Router();
@@ -56,6 +56,14 @@ router.post("/", async (req, res) => {
   );
 
   //   console.log(`User named || ${body.firstName} || Created Successfully`);
+
+  //Creating account in db
+  const userId = dbUser._id;
+
+  await Account.create({
+    userId,
+    balance: (1 + Math.random() * 10000).toFixed(2),
+  });
 
   res.json({
     msg: "User Created Successfully",

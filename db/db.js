@@ -15,16 +15,48 @@ mongoose
   });
 
 const UserSchema = mongoose.Schema({
-  firstName: String,
-  lastName: String,
-  email: String,
-  password: String,
+  firstName: {
+    type: String,
+    required: true,
+    trim: true,
+    maxLength: 50,
+  },
+  lastName: {
+    type: String,
+    required: true,
+    trim: true,
+    maxLength: 50,
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    trim: true,
+    lowercase: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
   createdAt: {
     type: Date,
     default: Date.now, // Automatically set to current date and time
   },
 });
 
-const User = mongoose.model("User", UserSchema);
+const AccountSchema = mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
+  balance: {
+    type: Number,
+    required: true,
+  },
+});
 
-module.exports = { User };
+const User = mongoose.model("User", UserSchema);
+const Account = mongoose.model("Account", AccountSchema);
+
+module.exports = { User, Account };

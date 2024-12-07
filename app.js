@@ -4,6 +4,7 @@ const app = express();
 const PORT = 3000;
 // const bodyParser = require("body-parser");
 const userRoute = require("./routes/user");
+const accountRoute = require("./routes/account");
 
 app.use(cors());
 // app.use(bodyParser.json());
@@ -13,6 +14,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/user", userRoute);
+app.use("/account", accountRoute);
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:3000/`);
